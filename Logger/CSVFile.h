@@ -4,6 +4,9 @@ class CSVFile
     char filename[64];
 
   public:
-    CSVFile(char *filename);
+    CSVFile(const char *filename);
     ~CSVFile();
+
+    bool addField(const char *field);
+    bool nextLine();
 };
