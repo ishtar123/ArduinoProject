@@ -132,7 +132,3 @@ bool INIFile::hasSection(const char *section){
   Serial.println("Section not found.");
   return false;
 }
-
-bool INIFile::initSD(){
-  
-}

@@ -9,7 +9,7 @@ void setup() {
   Serial.begin(9600);
   while(!Serial) {}
 
-  SD.begin(SDPINNO)
+  SD.begin(SDPINNO);
   
   INIFile myFile("config/setting.ini");
   myFile.getParam("[setting]", "param1=", buf);
@@ -18,9 +18,5 @@ void setup() {
 }
 
 void loop() {
-  int val = 0;
-
-  val = analogRead(0);
-
-  Serial.println(val);
+  
 }

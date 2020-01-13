@@ -6,4 +6,4 @@ class CSVFile
   public:
     CSVFile(char *filename);
     ~CSVFile();
-}
+};
