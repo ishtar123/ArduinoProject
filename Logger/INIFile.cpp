@@ -6,17 +6,22 @@
 
 #define PINNO 10
 
-INIFile::INIFile(char *filename){
+INIFile::INIFile(const char *filename){
   strcpy(this->filename, filename);
 }
 
 INIFile::~INIFile(){
 }
 
-bool INIFile::getLine(const int row, char *line, const unsigned int bufsize, bool clearEscape=false){
+// ファイルのrow行を*lineに格納する。(row >= 1)
+// 行が存在しない場合は*line = null, falseを返す。
+bool INIFile::getLine(const int row, char *line, const unsigned int bufsize, bool clearEscape){
   File file;
+  // バッファインデックス
   int i = 0;
+  // 処理中の行
   int rowcount = 1;
+  // 今処理している行が目的の行か
   bool found_row = row == 1 ? true : false;
 
   // ファイルオープン
@@ -26,7 +31,8 @@ bool INIFile::getLine(const int row, char *line, const unsigned int bufsize, boo
     Serial.println(this->filename);
     return false;
   }
-  
+
+  // 1文字ずつループ
   while(file.available()){
     // バッファオーバーフロー回避
     if(bufsize + 1 <= i){
@@ -39,8 +45,9 @@ bool INIFile::getLine(const int row, char *line, const unsigned int bufsize, boo
     // 1文字読み取り
     char readchr = file.read();
 
-    // バッファに追加
+    // 目的行の場合
     if(found_row){
+      // エスケープ文字除去フラグ=Trueの場合は除去
       if(clearEscape){
         if(readchr != '\t' && readchr != '\n'){
           line[i++] = readchr;
@@ -51,15 +58,11 @@ bool INIFile::getLine(const int row, char *line, const unsigned int bufsize, boo
       }
     }
 
-    // 1行読み取り用処理
-    if(readchr == '\n'){
-      // 目的行の終端の場合終了
+    // 改行コードの場合
+    if(readchr == '\n' || readchr == EOF){
+      // 目的行の終端の場合これ以上処理を継続しない
       if(found_row){
-        // 終端文字を挿入
-        line[i++] = '\0';
-
-        file.close();
-        return true;
+        break;
       }
       
       // 次の行が目的の行か
@@ -70,17 +73,28 @@ bool INIFile::getLine(const int row, char *line, const unsigned int bufsize, boo
       rowcount++;
     }
   }
-
+  
+  // 終端文字を挿入
+  line[i++] = '\0';
   file.close();
-  Serial.println("INIFile::getLine\nRow not found");
-  return false;
+
+  if(found_row){
+    return true;
+  }
+  else{
+    return false;
+  }
 }
 
 bool INIFile::getParam(const char *section, const char *param, char *buf){
+  // 1行分のバッファ
   char line[64];
+  // 読み取る行
   int i = 1;
+  // セクションを発見したか
   bool found_section = false;
 
+  // i行が存在する間ループ
   while(this->getLine(i++, line, 64, true)){
     // パラメータを検索
     if(found_section){
@@ -97,6 +111,7 @@ bool INIFile::getParam(const char *section, const char *param, char *buf){
     
     // セクションを検索
     if(strcmp(line, section)){
+      Serial.println("in");
       found_section = true;
     }
   }
@@ -120,7 +135,7 @@ bool INIFile::hasSection(const char *section){
   return false;
 }
 
-static bool INIFile::initSD(){
+bool INIFile::initSD(){
   if(!SD.begin(PINNO)){
     Serial.println("SD initalization failed.");
     return false;
