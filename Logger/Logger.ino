@@ -1,4 +1,7 @@
+#include <SD.h>
 #include "INIFile.h"
+
+#define SDPINNO 10
 
 void setup() {
   char buf[256];
@@ -6,15 +9,18 @@ void setup() {
   Serial.begin(9600);
   while(!Serial) {}
 
-  INIFile::initSD();
-
-  INIFile myFile("test.ini");
+  SD.begin(SDPINNO)
+  
+  INIFile myFile("config/setting.ini");
   myFile.getParam("[setting]", "param1=", buf);
   
   Serial.println(buf);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  int val = 0;
 
+  val = analogRead(0);
+
+  Serial.println(val);
 }

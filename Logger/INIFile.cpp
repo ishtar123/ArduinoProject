@@ -4,8 +4,6 @@
 #include <SPI.h>
 #include <SD.h>
 
-#define PINNO 10
-
 INIFile::INIFile(const char *filename){
   strcpy(this->filename, filename);
 }
@@ -136,11 +134,5 @@ bool INIFile::hasSection(const char *section){
 }
 
 bool INIFile::initSD(){
-  if(!SD.begin(PINNO)){
-    Serial.println("SD initalization failed.");
-    return false;
-  }
   
-  Serial.println("SD initalization done.");
-  return true;
 }

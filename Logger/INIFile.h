@@ -1,4 +1,3 @@
-#include <SD.h>
 
 class INIFile{
   private:
@@ -11,7 +10,4 @@ class INIFile{
     bool getParam(const char *section, const char *param, char *buf);
     bool writeParam(char *str);
     bool hasSection(const char *section);
-
-  public:
-    static bool initSD();
 };
