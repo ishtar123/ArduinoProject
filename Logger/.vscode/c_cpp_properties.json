@@ -1,0 +1,34 @@
+{
+    "env": {
+        "PACKAGES_PATH": "C:/Program Files (x86)/Arduino",
+        "USER_PATH": "C:/Users/kagek/Documents/Arduino"
+    },
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:\\Users\\kagek\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**",
+                "C:\\Users\\kagek\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.6.3\\**",
+                "C:\\Program Files (x86)\\Arduino\\tools\\**",
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\**",
+                "${workspaceFolder}"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}",
+                    "${env:PACKAGES_PATH}/tools",
+                    "${env:PACKAGES_PATH}/hardware",
+                    "${env:PACKAGES_PATH}/libraries",
+                    "${env:USER_PATH}/libraries"
+                ]
+            },
+            "forcedInclude": [
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\cores\\arduino\\Arduino.h"
+            ],
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}
