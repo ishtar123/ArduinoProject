@@ -2,11 +2,12 @@
 #include <MsTimer2.h>
 #include "INIFile.h"
 #include "CSVFile.h"
+#include "TextFile.h"
 
 #define SDPINNO 10
 
 void setup() {
-    char buf[256];
+    char buf[64];
 
     Serial.begin(9600);
     while(!Serial) {}
@@ -15,7 +16,6 @@ void setup() {
 
     INIFile myFile("config/setting.ini");
     myFile.getParam("[setting]", "param1=", buf);
-
     Serial.println(buf);
 
     // タイマーを設定
@@ -28,11 +28,11 @@ void loop() {
 }
 
 void timer_tick(){
-    CSVFile mycsv("data.csv");
-    char buf[64];
+    unsigned long time;
 
-    mycsv.addField("00:00:00");
-    sprintf(buf, "%d", analogRead(0));
-    mycsv.addField(buf);
-    mycsv.nextLine();
+    time = millis();
+
+    CSVFile mycsv("data.csv");
+
+    mycsv.writeLineByFormat("%lu,%d", time, analogRead(0));
 }

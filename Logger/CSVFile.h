@@ -1,12 +1,9 @@
-class CSVFile
-{
-    private:
-        char filename[64];
+#pragma once
+#include "TextFile.h"
 
+class CSVFile : public TextFile
+{
     public:
         CSVFile(const char *filename);
         ~CSVFile();
-
-        bool addField(const char *field);
-        bool nextLine();
 };
