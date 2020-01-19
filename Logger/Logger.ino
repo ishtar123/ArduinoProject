@@ -3,8 +3,12 @@
 #include "INIFile.h"
 #include "CSVFile.h"
 #include "TextFile.h"
+#include "MyWrapper.h"
 
 #define SDPINNO 10
+
+CSVFile mycsv("data.csv");
+unsigned long timer = 0;
 
 void setup() {
     char buf[64];
@@ -18,21 +22,14 @@ void setup() {
     myFile.getParam("[setting]", "param1=", buf);
     Serial.println(buf);
 
-    // タイマーを設定
-    MsTimer2::set(500, timer_tick);
-    MsTimer2::start();
+    MyWrapper::initRTC();
+    MyWrapper::getTimeFromRTC(buf, 64);
 }
 
 void loop() {
-  
-}
-
-void timer_tick(){
-    unsigned long time;
-
-    time = millis();
-
-    CSVFile mycsv("data.csv");
-
-    mycsv.writeLineByFormat("%lu,%d", time, analogRead(0));
+    if(millis() - timer > 1000)
+    {
+        timer = millis();
+        mycsv.writeLineByFormat("%lu,%d", millis(), analogRead(0));
+    }
 }
