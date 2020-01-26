@@ -5,12 +5,10 @@
     },
     "configurations": [
         {
+            "name": "",
             "includePath": [
-                "C:\\Users\\kagek\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**",
-                "C:\\Users\\kagek\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.6.3\\**",
-                "C:\\Program Files (x86)\\Arduino\\tools\\**",
-                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\**",
-                "${workspaceFolder}"
+                "${workspaceFolder}",
+                "${env:USER_PATH}/libraries/RTC"
             ],
             "browse": {
                 "path": [
